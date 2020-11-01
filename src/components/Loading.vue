@@ -1,4 +1,5 @@
 <template>
+  <!--ローディング画面-->
     <div>
       <v-overlay>
     <div class="fullview">

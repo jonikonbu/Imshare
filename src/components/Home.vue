@@ -37,7 +37,7 @@
         </v-tabs>
       <v-container fluid>
         <v-tabs-items v-model="tabs"> 
-         <!--画像リスト-->
+         <!--画像リスト(タブの中身)-->
           <!--新着順-->
           <v-tab-item>
             <v-row>
@@ -174,6 +174,7 @@ import {db} from '../firebase'
             }); 
      },
      methods:{
+          //タブの切替時のチェンジメソッド
           tabChange(num){
             //人気順
             if(num === 1){
@@ -216,6 +217,7 @@ import {db} from '../firebase'
                   }) 
             }
           },
+          //検索機能メソッド
           search(keyword){
             this.tabs = 0
             this.newPosts =[]
@@ -227,9 +229,11 @@ import {db} from '../firebase'
                  })
                })
           },
+          //Topへ戻る
           toTop(){
            this.$vuetify.goTo(0)
           },
+          //Topへボタンの出現条件
           onScroll(e){
             if (typeof window === 'undefined') return
             const top = window.pageYOffset ||   e.target.scrollTop || 0

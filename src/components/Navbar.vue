@@ -22,17 +22,17 @@
         <!--ナビボタン-->
           <v-btn depressed class="hidden-sm-and-down" style="margin-left:20px;">
             <router-link to="/" style="text-decoration:none; color:#000080; font-weight:bold;">
-              Home
+              ホーム
             </router-link>
           </v-btn>
           <v-btn depressed class="hidden-sm-and-down" style="margin-left:20px;">
             <router-link to="/post" style="text-decoration:none; color:#000080; font-weight:bold;">
-              Post
+              投稿
             </router-link>
           </v-btn>
           <v-btn depressed class="hidden-sm-and-down" style="margin-left:20px;">
             <router-link to="/mypage" style="text-decoration:none; color:#000080; font-weight:bold;">
-              Mypage
+              マイページ
             </router-link>
           </v-btn>
 
@@ -40,27 +40,35 @@
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
             <v-btn depressed class="hidden-sm-and-down" v-bind="attrs" v-on="on" style="margin-left:20px; color:#000080; font-weight:bold;">
-              User
+              ユーザー
             </v-btn>
           </template>
           <v-list>
             <v-list-item>
               <v-btn color="#1E90FF" depressed class="login" @click="loginModal = true">
                 <span style="color:#fff;">
-                  Login
+                  ログイン
                 </span>
               </v-btn>
             </v-list-item>
             <v-list-item v-if="login">
-            <v-list-item-title><v-btn color="#1E90FF" depressed @click="userLogOut"><span style="color:#fff;">Logout</span></v-btn></v-list-item-title>
+            <v-list-item-title><v-btn color="#1E90FF" depressed @click="userLogOut"><span style="color:#fff;">ログアウト</span></v-btn></v-list-item-title>
           </v-list-item>
              <v-list-item v-else>
-            <v-list-item-title><v-btn depressed color="#1E90FF" class="signin" @click="signinModal = true"><span style="color:#fff;">Signin</span></v-btn></v-list-item-title>
+            <v-list-item-title><v-btn depressed color="#1E90FF" class="signin" @click="signinModal = true"><span style="color:#fff;">新規登録</span></v-btn></v-list-item-title>
           </v-list-item>
             
           </v-list>
         </v-menu>
-        <!--サーチ機能-->
+        <v-spacer />
+        <div class="navbarr-text" v-if="login">
+          <p class="navbar-text-item">ようこそ {{this.$store.state.user.name}} 様</p>
+        </div>
+        <div class="navbar-text" v-else>
+          <p class="navbar-text-item-else">ユーザーボタンからログイン又は新規登録できます。
+          </p>
+        </div>
+        
         </v-row>
       </v-container>
     </v-app-bar>
@@ -78,7 +86,7 @@
             </v-list-item-icon>
             <v-list-item-title>
                 <router-link to="/" style="text-decoration:none; color:#000080;">
-                    Home
+                    ホーム
                 </router-link></v-list-item-title>
           </v-list-item>
 
@@ -88,7 +96,7 @@
             </v-list-item-icon>
             <v-list-item-title>
                 <router-link to="/post" style="text-decoration:none; color:#000080;">
-                    Post
+                    投稿
                 </router-link></v-list-item-title>
           </v-list-item>
 
@@ -98,7 +106,7 @@
             </v-list-item-icon>
             <v-list-item-title>
                 <router-link to="/mypage" style="text-decoration:none; color:#000080;">
-                    Mypage
+                    マイページ
                 </router-link></v-list-item-title>
           </v-list-item>
 
@@ -107,18 +115,18 @@
         <!--ユーザードロワー-->
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title style="color:#000080;">User</v-list-item-title>
+              <v-list-item-title style="color:#000080;">ユーザー</v-list-item-title>
             </v-list-item-content>
           </template>
 
           <v-list-item >
-            <v-list-item-title><v-btn depressed color="#1E90FF" class="login" @click="loginModal = true"><span style="color:#fff;">Login</span></v-btn></v-list-item-title>
+            <v-list-item-title><v-btn depressed color="#1E90FF" class="login" @click="loginModal = true"><span style="color:#fff;">ログイン</span></v-btn></v-list-item-title>
           </v-list-item>
           <v-list-item v-if="login">
-            <v-list-item-title><v-btn color="#1E90FF" depressed @click="userLogOut"><span style="color:#fff;">Logout</span></v-btn></v-list-item-title>
+            <v-list-item-title><v-btn color="#1E90FF" depressed @click="userLogOut"><span style="color:#fff;">ログアウト</span></v-btn></v-list-item-title>
           </v-list-item>
           <v-list-item v-else>
-            <v-list-item-title><v-btn depressed color="#1E90FF" class="signin" @click="signinModal = true"><span style="color:#fff;">Signin</span></v-btn></v-list-item-title>
+            <v-list-item-title><v-btn depressed color="#1E90FF" class="signin" @click="signinModal = true"><span style="color:#fff;">新規登録</span></v-btn></v-list-item-title>
           </v-list-item>
           
         </v-list-group>
@@ -131,7 +139,7 @@
     <!--新規登録ダイアログ-->
     <v-dialog v-model = "signinModal" max-width="600px">
       <v-card>
-        <v-card-title>Signin</v-card-title>
+        <v-card-title>新規登録</v-card-title>
         <v-card-text>
           <v-text-field v-model="signInName" label="Name*" required></v-text-field>
           <v-text-field v-model="signInEmail" label="Email*" required></v-text-field>
@@ -139,8 +147,8 @@
         </v-card-text>
         <v-divider></v-divider>
           <v-card-actions>
-          <v-btn color="error" @click="signinModal = false">Close</v-btn>
-          <v-btn color="primary" @click="userSignIn">Registration</v-btn>
+          <v-btn color="error" @click="signinModal = false">閉じる</v-btn>
+          <v-btn color="primary" @click="userSignIn">確定</v-btn>
         </v-card-actions>
         
       </v-card>
@@ -149,15 +157,15 @@
     <!--ログインダイアログ-->
     <v-dialog v-model = "loginModal" max-width="600px">
       <v-card>
-        <v-card-title>Login</v-card-title>
+        <v-card-title>ログイン</v-card-title>
         <v-card-text>
           <v-text-field v-model="loginEmail" label="Email*" required></v-text-field>
           <v-text-field v-model="loginPassword" label="PassWord*" type="password" required></v-text-field>
         </v-card-text>
         <v-divider></v-divider>
           <v-card-actions>
-          <v-btn color="error" @click="loginModal = false">Close</v-btn>
-          <v-btn color="primary" @click="userLogIn">Login</v-btn>
+          <v-btn color="error" @click="loginModal = false">閉じる</v-btn>
+          <v-btn color="primary" @click="userLogIn">ログイン</v-btn>
         </v-card-actions>
         
       </v-card>
@@ -172,10 +180,14 @@ export default {
   name:'Navbar',
   data(){
     return{
+    //ハンバーガーメニューの中身の表示（初期値）
     drawer: false,
+    //ログアウトボタンの出現条件（初期値）
     logoutBtnShow:false,
     
+    //ログインモーダルの初期値
     loginModal:false,
+    //サインインモーダルの初期値
     signinModal:false,
 
     //新規登録用
@@ -231,3 +243,12 @@ export default {
   },
 }
 </script>
+<style>
+  .navbar-text .navbar-text-item-else{
+    font-size:13px;
+    color:red;
+  }
+  .navbar-text .navbar-text-item{
+    font-size:13px;
+  }
+</style>

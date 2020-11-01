@@ -10,31 +10,35 @@ import {fb} from '../firebase'
 Vue.use(VueRouter)
 
   const routes = [
+  //ホーム画面
   {
     path: '/',
     name:'Home',
     component: Home,
     props:true,
   },
+  //投稿ページ
   {
     path: '/post',
     name: 'Post',
     component: Post,
     meta:{requiresAuth:true}
   },
+  //マイページ
   {
     path: '/mypage',
     name:'Mypage',
     component: Mypage,
     meta:{requiresAuth:true}
   },
+  //画像詳細ページ
   {
     path:'/pickup/:post',
     name:'Pickup',
     component: Pickup,
     meta:{requiresAuth:true},
   },
-  
+  //エラーページ
   {
     path:'*',
     component:NotFound
@@ -47,6 +51,7 @@ const router = new VueRouter({
   routes
 });
 
+//ページ遷移時のナビゲーションガード
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some(recode => recode.meta.requiresAuth);
   if (requiresAuth && !(await fb.getCurrentUser())) {
