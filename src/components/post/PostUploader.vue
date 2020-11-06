@@ -1,5 +1,6 @@
 <template>
     <div id="post-uploader">
+      <!--アップローダー-->
         <v-row>
           <v-col cols="12" sm="6" class="img-grid">
             <v-card>
@@ -68,6 +69,7 @@ export default{
       Loading
     },
     methods:{
+      //選択したファイルの表示（アップロード用）
       onFileChange(e){
         const files = e.target.files || e.dataTransfer.files;
         this.createImage(files[0]);
@@ -84,10 +86,12 @@ export default{
           
         }
       },
+      //選択したファイルの削除（アップロード用）
       remove(){
         this.uploadImage = false
       },
       
+      //firebaseへアップロード処理
       addImgFirebase(){
         this.loading = true
         //ログイン中のユーザーのuidを取得
@@ -137,8 +141,8 @@ export default{
                 docId:docRef.id
               })
               .then(()=>{
-                alert('投稿を完了しました。')
                 this.loading = false
+                alert('投稿を完了しました。')
                 location.reload();
               })
             })
@@ -152,7 +156,7 @@ export default{
     }
 }
 </script>
-<style>
+<style scoped>
 .img-grid{
   text-align: center;
 }

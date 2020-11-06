@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import NotFound from '../components/Not'
-import Home from '../components/Home'
+import HomeTab from '../components/HomeTab'
 import Post from '../components/post/Post'
 import Mypage from '../components/mypage/Mypage'
 import Pickup from '../components/Pickup'
@@ -14,7 +14,7 @@ Vue.use(VueRouter)
   {
     path: '/',
     name:'Home',
-    component: Home,
+    component: HomeTab,
     props:true,
   },
   //投稿ページ

@@ -47,7 +47,7 @@
             </ul>
             <!--選択した画像を表示-->
             <v-card>
-              <v-img :src="imgData.imgUrl" alt="img" style="width:100%; height:500px;"></v-img>
+              <v-img class="pickup-img" :src="imgData.imgUrl" alt="img"></v-img>
             </v-card>
         </v-col>
  
@@ -68,14 +68,17 @@
           <div class="comment-area">
             <div v-for="(comment,index) in postComments" :key="index">
               <v-card
-                class="mx-auto"
+                class="mx-auto card"
                 max-width="400"
-                style="border-radius:10px; margin-top:15px;"
                 >
-                <v-card-text>
-                  <div>{{comment.name}}</div>
+                <v-card-text class="v-card-text">
+                  <v-row class="comment-balloon">
+                    <v-col class="balloon-img" cols="3"><v-img class="balloon-img" :src="comment.myphoto"></v-img></v-col>
+                    <v-col class="balloon-text-area" cols="9"><p class="balloon-name">{{comment.name}}</p>
                     <hr/>
-                  <div>{{comment.commentText}}</div>
+                      <div class="balloon-text">{{comment.commentText}}</div>
+                    </v-col>
+                  </v-row> 
                 </v-card-text>
               </v-card> 
             </div>         
@@ -232,6 +235,7 @@ export default {
       addComment(){
         db.collection('posts').doc(this.postId).collection('comment')
           .add({
+            myphoto:this.$store.state.user.myphoto,
             uid:this.$store.state.userUid.uid,
             name:this.$store.state.user.name,
             date:new Date,
@@ -246,15 +250,21 @@ export default {
     
 }
 </script>
-<style>
+<style scoped lang="scss">
 .image-area v-img{
   text-align: center;
 }
 .like-book-area{
   list-style: none;
 }
-ul.like-book-area li{
-  display: inline-block;
+ul.like-book-area {
+
+  li{
+    display: inline-block;
+  }
+}
+.pickup-img{
+  width:100%; height:500px
 }
 .post-comment{
   height:100px;
@@ -262,12 +272,48 @@ ul.like-book-area li{
   overflow: scroll;
 }
 .comment-area{
-  text-align: center;
   height:375px;
   overflow: scroll;
   border:1px solid #A9A9A9;
   border-radius: 10px;
   background-color:#F5F5F5;
+
+  .card{
+    border-radius:10px;
+    padding:0;
+    margin:10px;
+
+    .v-card-text{
+      text-align: center;
+      margin:0;
+      padding:5px;
+    }
+
+    .comment-balloon{
+      margin:0;
+      padding:0;
+
+      .balloon-img{
+        width:50px;
+        height:50px;
+        border-radius:50%;
+      }
+      .balloon-text-area{
+       
+       .balloon-name{
+         text-align: left;
+         font-size:15px;
+         margin:5px;
+         font-weight: bold;
+       }
+       .balloon-text{
+         font-size:13px;
+         text-align:left;
+       }
+      }
+
+    }
+  }
 }
 .comment-logo{
   text-align: left;
@@ -280,5 +326,6 @@ ul.like-book-area li{
   bottom:10px;
   text-align: right;
 }
+
 </style>
 

@@ -16,7 +16,7 @@
                     :key="index" cols="6" lg="2">
                       <v-card style="border-radius:15px;">
                         <v-img :src="image.imgUrl" 
-                          class="white--text align-end img img-size"
+                          class="white--text align-end img img-size animate__animated animate__fadeIn"
                         >
                           <v-card-title style="font-weight:bold; font-size:15px;" v-text="image.title"></v-card-title>
                         </v-img>
@@ -51,7 +51,7 @@
               <!--ブックマークリスト-->
               <v-tab-item>
                 <v-row>
-                  <v-col v-for="bookMark in bookMarkImg" :key="bookMark.imgUrl" cols="6" lg="2">
+                  <v-col class="animate__animated animate__fadeIn" v-for="bookMark in bookMarkImg" :key="bookMark.imgUrl" cols="6" lg="2">
                     <v-card>
                       <v-img :src="bookMark.imgUrl" 
                         class="white--text align-end img img-size"

@@ -1,13 +1,21 @@
 <template>
   <div id="mypage">
     <v-container>
-      <Mypagelist/>
+      <v-row>
+        <v-col cols="12" sm="6" style="text-align:center;">
+          <mypageIcon/>
+        </v-col>
+        <v-col cols="12" sm="6" style="text-align:left;">
+          <Mypagelist/>
+        </v-col>
+      </v-row>
       <MypageTabs/>
   </v-container>
           
 </div>
 </template>
   <script>
+      import MypageIcon from './MypageIcon'
       import Mypagelist from './Mypagelist'
       import MypageTabs from './MypageTabs'
 
@@ -15,6 +23,7 @@
         name:'Mypage',
         components:{
           MypageTabs,
+          MypageIcon,
           Mypagelist
         },
       }

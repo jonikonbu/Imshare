@@ -17,7 +17,8 @@ export default new Vuex.Store({
     //user情報オブジェクト保管
     user:{
       name:'',
-      email:''
+      email:'',
+      myphoto:''
   },
     //user状態の表示  
     login:false,
@@ -46,7 +47,7 @@ export default new Vuex.Store({
           userRef.get().then((doc)=>{
             if(doc.exists){
               const userData = doc.data()
-                return commit('setUser',{name:userData.name, email:userData.email})
+                return commit('setUser',{name:userData.name, email:userData.email,myphoto:userData.myphoto})
             }
           })
       }
@@ -69,7 +70,7 @@ export default new Vuex.Store({
                   userRef.get().then((doc)=>{
                     if(doc.exists){
                       const userData = doc.data()
-                      return commit('setUser',{name:userData.name, email:userData.email})
+                      return commit('setUser',{name:userData.name, email:userData.email,myphoto:userData.myphoto})
                     }
                   })
               }
@@ -100,6 +101,11 @@ export default new Vuex.Store({
     setUser(state,payload){
       state.user.name = payload.name
       state.user.email = payload.email
+      state.user.myphoto = payload.myphoto
+    },
+    setMyphoto(state,url){
+      console.log(url)
+      state.user.myphoto = url
     }
     
   },

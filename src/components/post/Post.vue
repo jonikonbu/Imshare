@@ -14,10 +14,10 @@ import PostUploader from './PostUploader'
     }
   }
       </script>
-    <style>
-#post{
-  margin:20px;
-  position: relative;
-  top:80px;
+<style scoped>
+  #post{
+    margin:20px;
+    position: relative;
+    top:80px;
 }
 </style>
