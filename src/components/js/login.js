@@ -2,7 +2,6 @@ import store from '../../store/index'
 import {auth,db} from '../../firebase'
 
 
-
 //新規登録処理
 export const signIn = (signInEmail,signInPassword,signInName) =>{
     auth

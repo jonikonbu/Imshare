@@ -13,27 +13,35 @@
       @keydown.enter="search(keyword)"
       />
     <!--タブメニュー-->
-      <div>
+      <div class="tab-menu">
         <v-tabs color="#000080" v-model="tabs" @change="tabChange">
-          <v-tab>
-            <span style="font-weight:bold;">
-              新着順
-            </span></v-tab>
-          <v-tab>
-            <span style="font-weight:bold;">
-              人気順
-            </span>
-          </v-tab>
-          <v-tab>
-            <span style="font-weight:bold;">
-              写真
-            </span>
-          </v-tab>
-          <v-tab>
-            <span style="font-weight:bold;">
-              イラスト
-            </span>
-          </v-tab>
+          
+              
+                <v-tab>
+                  <span class="tab-menu-item">
+                    新着順
+                  </span>
+                </v-tab>
+              
+            
+              <v-tab>
+                <span class="tab-menu-item">
+                  人気順
+                </span>
+              </v-tab>
+            
+            
+              <v-tab>
+                <span  class="tab-menu-item">
+                  写真
+                </span>
+              </v-tab>
+            
+              <v-tab>
+                <span class="tab-menu-item">
+                  イラスト
+                </span>
+              </v-tab>
         </v-tabs>
       <v-container fluid>
         <v-tabs-items v-model="tabs"> 
@@ -42,17 +50,17 @@
           <v-tab-item>
             <v-row>
               <v-col class="animate__animated animate__fadeIn" v-for="(post,index) in newPosts" :key="index" cols="6" sm="3">
-                <v-card style="border-radius:15px;">
-                  <router-link :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
-                    <v-img :src="post.imgUrl" class="white--text align-end img img-size">
-                      <v-card-title style="font-weight:bold; font-size:15px;" v-text="post.title">
+                <v-card class="image-list-card">
+                  <router-link class="image-list-link-img" :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
+                    <v-img :src="post.imgUrl" class="white--text align-end img">
+                      <v-card-title class="image-list-title" v-text="post.title">
                       </v-card-title>
                     </v-img>
                   </router-link>
                     <v-card-actions>
                       <v-spacer></v-spacer>
                         <v-btn small color="#1E90FF">
-                          <router-link :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}" style="color:#fff; font-weight:bold; text-decoration:none;">
+                          <router-link class="image-list-link" :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
                             more
                           </router-link>
                         </v-btn>
@@ -65,16 +73,16 @@
         <v-tab-item>
           <v-row>
             <v-col class="animate__animated animate__fadeIn" v-for="(post,index) in popularPosts" :key="index" cols="6" sm="3">
-              <v-card style="border-radius:15px;">
-                <router-link :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
-                  <v-img :src="post.imgUrl" class="white--text align-end img img-size">
-                    <v-card-title style="font-weight:bold; font-size:15px;" v-text="post.title"></v-card-title>
+              <v-card class="image-list-card">
+                <router-link class="image-list-link-img" :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
+                  <v-img :src="post.imgUrl" class="white--text align-end img">
+                    <v-card-title class="image-list-title" v-text="post.title"></v-card-title>
                   </v-img>
                 </router-link>
                       <v-card-actions>
                         <v-spacer></v-spacer>
                       <v-btn small color="#1E90FF">
-                        <router-link :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}" style="color:#fff; font-weight:bold; text-decoration:none;">
+                        <router-link class="image-list-link" :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
                           more
                         </router-link>
                       </v-btn>
@@ -87,16 +95,16 @@
         <v-tab-item>
           <v-row>
             <v-col class="animate__animated animate__fadeIn" v-for="(post,index) in photoPosts" :key="index" cols="6" sm="3">
-              <v-card style="border-radius:15px;">
-                <router-link :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
-                  <v-img :src="post.imgUrl" class="white--text align-end img img-size">
-                    <v-card-title style="font-weight:bold; font-size:15px;" v-text="post.title"></v-card-title>
+              <v-card class="image-list-card">
+                <router-link class="image-list-link-img" :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
+                  <v-img :src="post.imgUrl" class="white--text align-end img">
+                    <v-card-title class="image-list-title" v-text="post.title"></v-card-title>
                   </v-img>
                 </router-link>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                       <v-btn small color="#1E90FF">
-                        <router-link :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}" style="color:#fff; font-weight:bold; text-decoration:none">
+                        <router-link class="image-list-link" :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
                           more
                         </router-link>
                       </v-btn>
@@ -109,16 +117,16 @@
         <v-tab-item>
           <v-row>
             <v-col class="animate__animated animate__fadeIn" v-for="(post,index) in illustPosts" :key="index" cols="6" sm="3">
-              <v-card style="border-radius:15px;">
-                <router-link :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
-                  <v-img :src="post.imgUrl" class="white--text align-end img img-size">
-                    <v-card-title style="font-weight:bold; font-size:15px;" v-text="post.title"></v-card-title>
+              <v-card class="image-list-card">
+                <router-link class="image-list-link-img" :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
+                  <v-img :src="post.imgUrl" class="white--text align-end img">
+                    <v-card-title class="image-list-title" v-text="post.title"></v-card-title>
                   </v-img>
                 </router-link>
                       <v-card-actions>
                         <v-spacer></v-spacer>
                           <v-btn small color="#1E90FF">
-                            <router-link :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}" style="color:#fff; font-weight:bold; text-decoration:none">
+                            <router-link class="image-list-link" :to="{ name: 'Pickup',params:{ post:`${post.docId}` }}">
                               more
                             </router-link>
                           </v-btn>
@@ -131,16 +139,17 @@
         </v-container>
       </div>
       <v-btn
-        v-scroll="onScroll" 
-        @click="toTop" 
-        v-show="topBtn"
-        fab
-        dark
-        fixed
-        bottom
-        right
-        color="#1E90FF"
-        >
+            v-scroll="onScroll" 
+            @click="toTop" 
+            v-show="topBtn"
+            fab
+            dark
+            fixed
+            bottom
+            right
+            color="#1E90FF"
+            class="top-btn"
+            >
          <v-icon>mdi-apple-keyboard-control</v-icon>
         </v-btn>
     </v-container>  
@@ -247,18 +256,45 @@ import {db} from '../firebase'
             if (typeof window === 'undefined') return
             const top = window.pageYOffset ||   e.target.scrollTop || 0
             this.topBtn = top > 500
+            
           }
      }
       
   }
 </script>
-<style scoped>
+<style lang="scss" scoped>
+  .tab-menu{
+
+    .tab-menu-item{
+      font-weight:bold;
+    }
+  }
+  //画像リストの画像
+  .img{
+    border-radius: 15px 15px 0 0;
+    height:200px;
+  }
   .img:hover{
     transition: 0.5s;
     color:#fff;
     opacity:0.5;
   }
-.img-size{
-  height:200px;
-}
+  .image-list-card{
+    border-radius:15px;
+
+    .image-list-link-img{
+      text-decoration: none;
+      
+      .image-list-title{
+        font-weight:bold;
+        font-size:15px;
+      }
+    }
+
+    .image-list-link{
+      color:#fff;
+      font-weight:bold; 
+      text-decoration:none;
+    }
+  }
 </style>

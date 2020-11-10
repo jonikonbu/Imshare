@@ -19,14 +19,14 @@
                         <input class="input" type="file" @change="onFileChange"/>
                         </label>
                     </div>
-                    <div depressed v-show="uploadMyphoto" style="margin:10px;">
-                        <v-btn @click="remove" color="red">
-                            <span style="color:#fff; font-weight:bold;">
+                    <div class="myphoto-btn-area" depressed v-show="uploadMyphoto">
+                        <v-btn class="myphoto-btn" color="red" @click="remove">
+                            <span>
                                 取消
                             </span>
                         </v-btn>
-                        <v-btn color="#1E90FF" @click="changeMyphoto">
-                            <span style="color:#fff; font-weight:bold;">変更</span>
+                        <v-btn class="myphoto-btn" color="#1E90FF" @click="changeMyphoto">
+                            <span>変更</span>
                         </v-btn>
                         </div>
                     </div>
@@ -128,9 +128,21 @@
             font-size:250px;
         }
         .myphoto-img{
-            border-radius:45%;
+            border-radius:50%;
             width:100%;
-            height:400px;
+            height:350px;
+        }
+        .myphoto-btn-area{
+            margin:10px;
+        
+            .myphoto-btn{
+                margin-left:10px;
+
+                span{
+                    color:#fff;
+                    font-weight:bold;
+                }
+            }
         }
     }
     .img-btn > .input{

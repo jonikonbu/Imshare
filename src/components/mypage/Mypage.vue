@@ -1,17 +1,14 @@
 <template>
   <div id="mypage">
-    <v-container>
       <v-row>
         <v-col cols="12" sm="6" style="text-align:center;">
-          <mypageIcon/>
+          <MypageIcon/>
         </v-col>
-        <v-col cols="12" sm="6" style="text-align:left;">
+        <v-col cols="12" sm="6" style="text-align:center;">
           <Mypagelist/>
         </v-col>
       </v-row>
-      <MypageTabs/>
-  </v-container>
-          
+      <MypageTabs style="margin-top:50px;"/>  
 </div>
 </template>
   <script>

@@ -1,25 +1,23 @@
 <template>
     <div id="Mypage-tabs">
       <Loading v-show="loading"/>
-        <div class="management-img">
+        <div class="mypage-tabs">
         <v-tabs color="#000080" v-model="tabs">
-          <v-tab style="font-weight:bold;">投稿リスト</v-tab>
-          <v-tab style="font-weight:bold;">ブックマーク</v-tab>
+          <v-tab class="mypage-tabs-item">投稿リスト</v-tab>
+          <v-tab class="mypage-tabs-item">ブックマーク</v-tab>
         </v-tabs>
           <v-container fluid>
             <v-tabs-items v-model="tabs">
               <!--投稿管理リスト-->
               <v-tab-item>
                <v-row>
-                  <v-col 
-                    v-for="(image,index) in postImages" 
-                    :key="index" cols="6" lg="2">
-                      <v-card style="border-radius:15px;">
-                        <v-img :src="image.imgUrl" 
-                          class="white--text align-end img img-size animate__animated animate__fadeIn"
-                        >
-                          <v-card-title style="font-weight:bold; font-size:15px;" v-text="image.title"></v-card-title>
+                  <v-col v-for="(image,index) in postImages" :key="index" cols="6" lg="2">
+                      <v-card class="management-list-card animate__animated animate__fadeIn">
+                        <router-link  class="management-list-link" :to="{ name: 'Pickup',params:{ post:`${image.docId}` }}">
+                        <v-img :src="image.imgUrl" class="white--text align-end img">
+                          <v-card-title class="management-list-title" v-text="image.title"></v-card-title>
                         </v-img>
+                        </router-link>
                           <v-card-actions>
                              <v-spacer></v-spacer>
                               <v-btn 
@@ -38,7 +36,7 @@
                               >
                                 <router-link 
                                   :to="{ name: 'Pickup',params:{ post:`${image.docId}` }}" 
-                                  style="color:#fff; font-weight:bold; text-decoration:none;"
+                                  class="management-more-link"
                                 >
                                   more
                                 </router-link>
@@ -52,16 +50,16 @@
               <v-tab-item>
                 <v-row>
                   <v-col class="animate__animated animate__fadeIn" v-for="bookMark in bookMarkImg" :key="bookMark.imgUrl" cols="6" lg="2">
-                    <v-card>
-                      <v-img :src="bookMark.imgUrl" 
-                        class="white--text align-end img img-size"
-                      >
-                        <v-card-title style="font-weight:bold; font-size:15px;" v-text="bookMark.title"></v-card-title>
+                    <v-card class="bookmark-list-card">
+                      <router-link class="bookmark-list-link" :to="{ name: 'Pickup',params:{ post:`${bookMark.docId}` }}">
+                      <v-img :src="bookMark.imgUrl" class="white--text align-end img">
+                        <v-card-title class="bookmark-list-title" v-text="bookMark.title"></v-card-title>
                       </v-img>
+                      </router-link>
                           <v-card-actions>
                             <v-spacer></v-spacer>
                           <v-btn small color="#1E90FF">
-                            <router-link :to="{ name: 'Pickup',params:{ post:`${bookMark.docId}` }}" style="color:#fff; font-weight:bold; text-decoration:none;">
+                            <router-link class="bookmark-more-link" :to="{ name: 'Pickup',params:{ post:`${bookMark.docId}` }}">
                               more
                             </router-link>
                           </v-btn>
@@ -137,8 +135,63 @@
         }
     }
 </script>
-<style>
-.img-size{
-  height:200px;
+
+<style lang="scss" scoped>
+.mypage-tabs{
+  
+  //投稿管理リスト
+  .mypage-tabs-item{
+    font-weight:bold;
+  }
+  .management-list-card{
+    border-radius:15px;
+
+    .management-list-link{
+      text-decoration: none;
+    }
+
+    .management-list-title{
+      font-weight:bold;
+      font-size:15px;
+    }
+    
+    .management-more-link{
+      color:#fff;
+      font-weight:bold;
+      text-decoration:none;
+    }
+  }
+
+  //ブックマークリスト
+  .bookmark-list-card{
+    border-radius:15px;
+
+    .bookmark-list-link{
+      text-decoration:none;
+    }
+
+    .bookmark-list-title{
+      font-weight:bold;
+      font-size:15px;
+    }
+    .bookmark-more-link{
+      color:#fff;
+      font-weight:bold; 
+      text-decoration:none;
+    }
+  }
+
+  //リスト画像透視
+  .img{
+    border-radius: 15px 15px 0 0;
+    height:200px;
+  }
+  .img:hover{
+    transition: 0.5s;
+    color:#fff;
+    opacity:0.5;
+  }
+
 }
+
 </style>

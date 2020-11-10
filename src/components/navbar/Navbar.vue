@@ -4,7 +4,7 @@
     <v-app-bar flat Inverted-Scroll >
       <!--ハンバーガーアイコン-->
     <v-app-bar-nav-icon
-      class="hidden-md-and-up"
+      class="hidden-md-and-up app-bar"
       @click="drawer = true"
     />
     <!--ロゴ-->
@@ -12,7 +12,7 @@
       <v-row align="center">
         <v-col>
           <v-img
-            :src="require('../assets/logo.jpg')"
+            :src="require('../../assets/logo.jpg')"
             class="mr-5"
             contain
             height="48"
@@ -95,7 +95,6 @@
   <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
         <v-list-item-group>
-
           <v-list-item>
             <v-list-item-icon>
               <v-icon color="#000080">mdi-home</v-icon>
@@ -108,7 +107,6 @@
                 </router-link>
             </v-list-item-title>
           </v-list-item>
-
           <v-list-item>
             <v-list-item-icon>
               <v-icon color="#000080">mdi-image</v-icon>
@@ -172,76 +170,44 @@
               </v-btn>
             </v-list-item-title>
           </v-list-item>
-          
         </v-list-group>
-
         </v-list-item-group>
       </v-list>
-
     </v-navigation-drawer>
-
-    <!--新規登録ダイアログ-->
     <div>
     <v-dialog v-model = "signinModal" max-width="600px">
-      <v-card>
-        <v-card-title>新規登録</v-card-title>
-        <v-card-text>
-          <v-text-field v-model="signInName" label="Name*" required></v-text-field>
-          <v-text-field v-model="signInEmail" label="Email*" required></v-text-field>
-          <v-text-field v-model="signInPassword" label="PassWord*" type="password" required></v-text-field>
-        </v-card-text>
-        <v-divider></v-divider>
-          <v-card-actions>
-          <v-btn color="error" @click="signinModal = false">閉じる</v-btn>
-          <v-btn color="primary" @click="userSignIn">確定</v-btn>
-        </v-card-actions>
-      </v-card>
+      <SigninDialog @signinClose="signinModal = false"></SigninDialog>
     </v-dialog>
     </div>
-    
-    <!--ログインダイアログ-->
     <v-dialog v-model = "loginModal" max-width="600px">
-      <v-card>
-        <v-card-title>ログイン</v-card-title>
-        <v-card-text>
-          <v-text-field v-model="loginEmail" label="Email*" required></v-text-field>
-          <v-text-field v-model="loginPassword" label="PassWord*" type="password" required></v-text-field>
-        </v-card-text>
-        <v-divider></v-divider>
-          <v-card-actions>
-          <v-btn color="error" @click="loginModal = false">閉じる</v-btn>
-          <v-btn color="primary" @click="userLogIn">ログイン</v-btn>
-        </v-card-actions>
-      </v-card>
+      <LoginDialog @loginClose="loginModal = false"></LoginDialog>
     </v-dialog>
   </div> 
 </template>
 <script>
-import {logOut,logIn,signIn} from '../components/js/login'
+import SigninDialog from './SigninDialog'
+import LoginDialog from './LoginDialog'
+import {logOut} from '../js/login'
 import {mapState} from 'vuex'
 
 export default {
   name:'Navbar',
+
+  components:{
+    SigninDialog,
+    LoginDialog
+  },
+
   data(){
     return{
     //ハンバーガーメニューの中身の表示（初期値）
     drawer: false,
     //ログアウトボタンの出現条件（初期値）
     logoutBtnShow:false,
-    
     //ログインモーダルの初期値
     loginModal:false,
     //サインインモーダルの初期値
     signinModal:false,
-
-    //新規登録用
-    signInName:'',
-    signInEmail:'',
-    signInPassword:'',
-
-    //ログイン登録用
-    loginEmail:'',
-    loginPassword:''
     }
   },
   computed:{
@@ -267,27 +233,16 @@ export default {
     //ログアウト処理
     userLogOut(){
               logOut()
+                this.$router.replace('/',() => {})
             },
-    //ログイン処理        
-    userLogIn(){
-        logIn(this.loginEmail,this.loginPassword)
-          this.loginModal= false 
-    },
-    //新規登録処理
-    userSignIn(){
-        signIn(this.signInEmail,this.signInPassword,this.signInName)
-          alert('登録が完了しました。');
-          this.signinModalt = false
-          if(this.$router == '/'){
-            console.log('')
-          }else{
-            this.$router.push('/');
-          }
-    }
   },
 }
 </script>
 <style scoped lang="scss">
+
+  .appbar{
+    background: black;
+  }
   
   .navbar-text {
     text-align: center;
@@ -358,6 +313,6 @@ export default {
   }
 
   .animate__animated.animate__slideInLeft {
-    --animate-duration: 1.5s;
+    --animate-duration: 1.0s;
   }
 </style>

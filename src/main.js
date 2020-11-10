@@ -10,7 +10,7 @@ Vue.use(VAnimateCss)
 
 firebase.init()
 
-require('@/assets/sass/main.scss')
+
 
 Vue.config.productionTip = false
 

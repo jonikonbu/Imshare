@@ -2,15 +2,15 @@
   <!--ローディング画面-->
     <div>
       <v-overlay>
-    <div class="fullview">
-      <div class="loading-spacer"></div>
-      <vue-loading 
-        type="spin"
-        color="#aaa"
-        :size="{ width: '50px', height: '50px' }"
-        >
-      </vue-loading>
-    </div>
+        <div class="fullview">
+          <div class="loading-spacer"></div>
+            <vue-loading 
+              type="spin"
+              color="#aaa"
+              :size="{ width: '50px', height: '50px' }"
+              >
+            </vue-loading>
+        </div>
       </v-overlay>
   </div>
 </template>

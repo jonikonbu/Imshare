@@ -15,7 +15,6 @@ Vue.use(VueRouter)
     path: '/',
     name:'Home',
     component: HomeTab,
-    props:true,
   },
   //投稿ページ
   {

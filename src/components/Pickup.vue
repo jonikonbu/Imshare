@@ -52,16 +52,16 @@
         </v-col>
  
         <!--コメントリスト-->
-        <v-col cols="12" md="6" style="margin-top:20px;">
+        <v-col class="comment-list" cols="12" md="6">
           <h4>投稿者コメント</h4>
           <div class="post-comment">
-            <p style="text-align:left; margin-left:10px; margin-top:5px;">{{imgData.comment}}</p>
+            <p>{{imgData.comment}}</p>
           </div>
           <div class="comment-header">
           <h3 class="comment-logo">コメント</h3>
             <div class="comment-btn">
               <v-btn color="#1E90FF" fab dark small>
-                <v-icon style="color:#fff;" @click="commentDialog=!commentDialog">mdi-plus</v-icon>
+                <v-icon class="comment-btn-icon" @click="commentDialog=!commentDialog">mdi-plus</v-icon>
               </v-btn>
             </div>
           </div>
@@ -86,39 +86,37 @@
         </v-col>
       </v-row>
       <!--コメントダイアログ--> 
-      <v-dialog
-        v-model="commentDialog"
-        max-width="500"
-      >
+      <v-dialog v-model="commentDialog" max-width="500">
         <v-card>
           <v-card-title>コメントを入力して下さい。</v-card-title>
             <v-card-text>
-              <v-textarea
-                label="コメント入力"
-                v-model="commentText"
-              >
+              <v-textarea label="コメント入力" v-model="commentText">
               </v-textarea>
                 <v-divider></v-divider>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                       <v-btn small color="red" @click="commentDialog = !commentDialog">
-                        <span style="color:#fff; font-weight:bold">閉じる</span>
+                        <span class="comment-dialog-btn-text">閉じる</span>
                       </v-btn>
                       <v-btn color="#1E90FF" @click="addComment" small>
-                        <span style="color:#fff; font-weight:bold">送信</span>
+                        <span class="comment-dialog-btn-text">送信</span>
                       </v-btn>
                   </v-card-actions> 
               </v-card-text> 
-        </v-card>  
+        </v-card>
       </v-dialog>
     </v-container>          
   </div>
 </template>
 <script>
-import {addLike,deleteLike,addBookMark,deleteBookMark} from '../components/js/Pickup'
+
+
+import {addLike,deleteLike,addBookMark,deleteBookMark} from './js/Pickup'
 import {db} from '../firebase'
 import {mapState} from 'vuex'
+
 export default {
+  
     data() {
       return {
         //firebaseStoreで受け取ったimg情報を受け取る
@@ -138,14 +136,16 @@ export default {
 
         //コメントダイアログの初期値
         commentDialog:false,
+
+        //コメント欄を表示
+        postComments:[],
+
         //コメント入力欄の内容を保管
         commentText:"",
-        //コメント欄を表示
-        postComments:[]
       }
     },
     computed:{
-      ...mapState({userId:'userUid',loginUser:'login'}),
+      ...mapState({userId:'userUid',loginUser:'login',userInformation:'user'}),
       //likeボタン判別
       is_like(){
         if(this.loginUser){
@@ -169,7 +169,7 @@ export default {
         }else{
           return false
         }
-      }
+      },
     },
 
     //遷移時に渡したドキュメントIDを元にfirebaseでstore取得をしてdataに情報を入れている。
@@ -209,6 +209,7 @@ export default {
         this.imgData.bookMark ++
         this.bookMarkShow = !this.bookMarkShow
         addBookMark(this.postId,uid,this.imgData.imgUrl,this.imgData.title)
+        alert('ブックマークに登録されました。')
       },
       //bookMarkボタンが解除された時
       deleteBookMarkPush(){
@@ -216,6 +217,7 @@ export default {
         this.imgData.bookMark --
         this.bookMarkShow = !this.bookMarkShow
         deleteBookMark(this.postId,uid)
+        alert('ブックマークが解除されました。')
       },
       //likeボタンが押された時
       addLikePush(){
@@ -223,6 +225,7 @@ export default {
         this.imgData.likeCount ++
         this.likeShow = !this.likeShow
         addLike(this.postId,uid)
+        alert('いいね！登録されました。')
       },
       //likeボタンが解除された時  
       deleteLikePush(){
@@ -230,101 +233,144 @@ export default {
         this.imgData.likeCount --
         this.likeShow = !this.likeShow
         deleteLike(this.postId,uid)
+        alert('いいね！解除されました')
       },
-      //コメント追加
       addComment(){
-        db.collection('posts').doc(this.postId).collection('comment')
-          .add({
-            myphoto:this.$store.state.user.myphoto,
-            uid:this.$store.state.userUid.uid,
-            name:this.$store.state.user.name,
-            date:new Date,
-            commentText:this.commentText,
-          })
-          .then(()=>{
-            this.commentText = ""
-            this.commentDialog = false
-          })
+          //ログインユーザーが自分のアイコンを持っていない時
+          if(this.$store.state.user.myphoto == undefined){ 
+              db.collection('posts').doc(this.postId).collection('comment')
+                .add({
+                  myphoto:'https://firebasestorage.googleapis.com/v0/b/original-image-273c8.appspot.com/o/images%2Faccount.png?alt=media&token=84fcacb2-26ca-4d2d-b430-7502d923718e',
+                  uid:this.$store.state.userUid.uid,
+                  name:this.$store.state.user.name,
+                  date:new Date,
+                  commentText:this.commentText,
+                })
+                .then(()=>{
+                  this.commentText = ""
+                  this.commentDialog = false
+                })
+                //ログインユーザーが自分のアイコンを持っている時  
+          }else{
+              db.collection('posts').doc(this.postId).collection('comment')
+                .add({
+                  myphoto:this.$store.state.user.myphoto,
+                  uid:this.$store.state.userUid.uid,
+                  name:this.$store.state.user.name,
+                  date:new Date,
+                  commentText:this.commentText,
+                })
+                .then(()=>{
+                  this.commentText = ""
+                  this.commentDialog = false
+                })
+          }
         },
       }
     
 }
 </script>
 <style scoped lang="scss">
-.image-area v-img{
-  text-align: center;
-}
-.like-book-area{
-  list-style: none;
-}
-ul.like-book-area {
+//いいねボタンとブックマークボタン
+.like-book-area {
 
   li{
     display: inline-block;
   }
 }
+
+//ピックアップ画像
 .pickup-img{
   width:100%; height:500px
 }
-.post-comment{
-  height:100px;
-  border:1px solid #A9A9A9;
-  overflow: scroll;
-}
-.comment-area{
-  height:375px;
-  overflow: scroll;
-  border:1px solid #A9A9A9;
-  border-radius: 10px;
-  background-color:#F5F5F5;
 
-  .card{
-    border-radius:10px;
-    padding:0;
-    margin:10px;
+//コメントリスト
+.comment-list{
+  margin-top:20px;
 
-    .v-card-text{
-      text-align: center;
-      margin:0;
-      padding:5px;
+  //投稿者コメント
+  .post-comment{
+    height:100px;
+    border:1px solid #A9A9A9;
+    overflow: scroll;
+
+    p{
+      text-align:left;
+      margin-left:10px;
+      margin-top:5px;
     }
+  }
 
-    .comment-balloon{
-      margin:0;
+  //ユーザーコメント
+  .comment-area{
+    height:375px;
+    overflow: scroll;
+    border:1px solid #A9A9A9;
+    border-radius: 10px;
+    background-color:#F5F5F5;
+
+    .card{
+      border-radius:10px;
       padding:0;
+      margin:10px;
 
-      .balloon-img{
-        width:50px;
-        height:50px;
-        border-radius:50%;
-      }
-      .balloon-text-area{
-       
-       .balloon-name{
-         text-align: left;
-         font-size:15px;
-         margin:5px;
-         font-weight: bold;
-       }
-       .balloon-text{
-         font-size:13px;
-         text-align:left;
-       }
+      .v-card-text{
+        text-align: center;
+        margin:0;
+        padding:5px;
       }
 
+      .comment-balloon{
+        margin:0;
+        padding:0;
+
+        .balloon-img{
+          width:50px;
+          height:50px;
+          border-radius:50%;
+        }
+        .balloon-text-area{
+        
+        .balloon-name{
+          text-align: left;
+          font-size:15px;
+          margin:5px;
+          font-weight: bold;
+        }
+        .balloon-text{
+          font-size:13px;
+          text-align:left;
+        }
+        }
+
+      }
     }
   }
 }
+
+//コメント欄のヘッダー
 .comment-logo{
   text-align: left;
   position: relative;
   top:23px;
   left:20px;
 }
+
+//コメントボタン
 .comment-btn{
   position: relative;
   bottom:10px;
   text-align: right;
+
+  //プラスアイコン
+  .comment-btn-icon{
+    color:#fff;
+  }
+}
+
+.comment-dialog-btn-text{
+  color:#fff;
+  font-weight:bold
 }
 
 </style>

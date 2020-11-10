@@ -2,17 +2,22 @@
     <div id="post-uploader">
       <!--アップローダー-->
         <v-row>
-          <v-col cols="12" sm="6" class="img-grid">
+          <v-col cols="12" sm="6" class="upload-file-area">
             <v-card>
               <v-img v-show="uploadImage" :src="uploadImage" alt=""/>
             </v-card>
             <div>
-              <label v-show="!uploadImage" class="img-btn" >ファイル選択
+              <label v-show="!uploadImage" class="file-upload-btn" >
+                ファイル選択
                  <input class="input" type="file" @change="onFileChange"/>
               </label>
               <div>
-                <div depressed v-show="uploadImage" style="margin:10px;">
-                  <v-btn @click="remove" color="red"><span style="color:#fff; font-weight:bold;">取消</span></v-btn>
+                <div class="remove-area" depressed v-show="uploadImage">
+                  <v-btn @click="remove" color="red">
+                    <span class="remove-btn">
+                      取消
+                    </span>
+                  </v-btn>
                 </div>
               </div>
             </div>
@@ -29,11 +34,11 @@
               row-height="15"
             ></v-textarea>
             <v-text-field v-model="title" label="タイトル"></v-text-field>
-              <v-select style="margin-top:50px" class="select" v-model="category" :items="items" label="カテゴリー">
+              <v-select class="select" v-model="category" :items="items" label="カテゴリー">
               </v-select>
                 <br/>
-                  <v-btn depressed color="#1E90FF" style="margin-top:50px;" class="save-btn" @click="addImgFirebase">
-                    <span style="color:#fff; font-weight:bold;">投稿</span>
+                  <v-btn class="submit-btn" depressed color="#1E90FF" @click="addImgFirebase">
+                    <span class="submit-btn-text">投稿</span>
                   </v-btn>
           </v-col>
         </v-row>
@@ -156,28 +161,57 @@ export default{
     }
 }
 </script>
-<style scoped>
-.img-grid{
+<style lang="scss" scoped>
+//ファイルを選択した時の画像領域
+.upload-file-area {
   text-align: center;
+
+  //ファイル選択ボタン
+  .file-upload-btn > .input{
+    display: none;
+  }
+  .file-upload-btn{
+    font-size:14px;
+    padding:10px;
+    border-radius:5px ;
+    color:#fff;
+    background-color:#1E90FF;
+    font-weight:bold;
+  }
+  .file-upload-btn:hover{
+    transition: 0.9s;
+    background-color:red	;
+  }
+  .file-upload-btn::after {
+    font-size: 1rem;
+    color: #888;
+    padding-left: 1rem;
+  }
+
+  //取り消しボタン
+  .remove-area{
+    margin:10px;
+  
+    .remove-btn{
+      color:#fff;
+      font-weight:bold;
+    }
+  }
 }
-.img-btn > .input{
-  display: none;
-}
-.img-btn{
-  font-size:14px;
-  padding:10px;
-  border-radius:5px ;
-  color:#fff;
-  background-color:#1E90FF;
-  font-weight:bold;
-}
-.img-btn:hover{
-  transition: 0.9s;
- background-color:red	;
-}
-.img-btn::after {
-  font-size: 1rem;
-  color: #888;
-  padding-left: 1rem;
-}
+
+  //カテゴリーセレクト
+  .selest{
+    margin-top:50px
+  }
+  
+  //投稿ボタン
+  .submit-btn{
+    margin-top:50px
+  }
+  .submit-btn-text{
+    color:#fff;
+    font-weight:bold;
+  }
+
+
 </style>
