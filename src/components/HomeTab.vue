@@ -138,20 +138,6 @@
           </v-tabs-items>
         </v-container>
       </div>
-      <v-btn
-            v-scroll="onScroll" 
-            @click="toTop" 
-            v-show="topBtn"
-            fab
-            dark
-            fixed
-            bottom
-            right
-            color="#1E90FF"
-            class="top-btn"
-            >
-         <v-icon>mdi-apple-keyboard-control</v-icon>
-        </v-btn>
     </v-container>  
   </div>
 </template>
@@ -251,13 +237,6 @@ import {db} from '../firebase'
           toTop(){
            this.$vuetify.goTo(0)
           },
-          //Topへボタンの出現条件
-          onScroll(e){
-            if (typeof window === 'undefined') return
-            const top = window.pageYOffset ||   e.target.scrollTop || 0
-            this.topBtn = top > 500
-            
-          }
      }
       
   }
